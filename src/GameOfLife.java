@@ -18,11 +18,10 @@ public class GameOfLife {
             grid = nextGeneration(grid);
             System.out.println("\nGénération " + gen + ":");
             printGrid(grid);
-            Thread.sleep(1000); // pause d'1s pour visualiser
+            Thread.sleep(1000);
         }
     }
 
-    // Calcul de la prochaine génération
     static int[][] nextGeneration(int[][] grid) {
         int[][] next = new int[SIZE][SIZE];
 
@@ -31,22 +30,15 @@ public class GameOfLife {
                 int aliveNeighbours = countNeighbours(grid, i, j);
 
                 if (grid[i][j] == 1) {
-                    if (aliveNeighbours == 2 || aliveNeighbours == 3) {
-                        next[i][j] = 1;
-                    } else {
-                        next[i][j] = 0;
-                    }
+                    next[i][j] = (aliveNeighbours == 2 || aliveNeighbours == 3) ? 1 : 0;
                 } else {
-                    if (aliveNeighbours == 3) {
-                        next[i][j] = 1;
-                    }
+                    next[i][j] = (aliveNeighbours == 3) ? 1 : 0;
                 }
             }
         }
         return next;
     }
 
-    // Compter les voisines vivantes
     static int countNeighbours(int[][] grid, int x, int y) {
         int count = 0;
         for (int i = -1; i <= 1; i++) {
@@ -61,13 +53,19 @@ public class GameOfLife {
         return count;
     }
 
-    // Afficher la grille
     static void printGrid(int[][] grid) {
+        String line = "+";
+        for (int i = 0; i < SIZE; i++) line += "---+";
+
         for (int i = 0; i < SIZE; i++) {
+            System.out.println(line);
+            System.out.print("|");
             for (int j = 0; j < SIZE; j++) {
-                System.out.print(grid[i][j] == 1 ? "O " : ". ");
+                System.out.print(grid[i][j] == 1 ? " O " : "   ");
+                System.out.print("|");
             }
             System.out.println();
         }
+        System.out.println(line);
     }
 }
